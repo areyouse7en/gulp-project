@@ -1,34 +1,27 @@
 'use strict';
-// requires
+
 var gulp = require('gulp'),
-	// html
-	jade = require('gulp-jade'),
-	// css
 	compass = require('gulp-compass'),
-	// utils
-	watch = require('gulp-watch'),
 	plumber = require('gulp-plumber'),
-	browserSync = require('browser-sync'),
+	watch = require('gulp-watch'),
+	browserSync = require('browser-sync').create(),
 	reload = browserSync.reload;
 
-
-
-gulp.task('jade', function() {
-	gulp.src('src/jade/**/*.jade')
-		.pipe(watch('src/jade/**/*.jade'))
-		.pipe(plumber())
-		.pipe(jade({
-			pretty: true
-		}))
-		.pipe(gulp.dest('builds'))
-		.pipe(reload({
-			stream: true
-		}));
+gulp.task('server', function() {
+	var files = [
+		'builds/*.html',
+		'builds/js/*.js',
+		'builds/css/*.css',
+		'builds/images/*'
+	];
+	browserSync.init(files, {
+		server: 'builds'
+	});
 });
 
 gulp.task('compass', function() {
-	gulp.src('src/*.scss')
-		.pipe(watch('src/scss/**/*.scss'))
+	gulp.src('srcs/scss/*.scss')
+		.pipe(watch('srcs/scss/*.scss'))
 		.pipe(plumber({
 			errorHandler: function(error) {
 				console.log(error.message);
@@ -37,29 +30,10 @@ gulp.task('compass', function() {
 		}))
 		.pipe(compass({
 			css: 'builds/css',
-			sass: 'src/scss'
+			sass: 'srcs/scss'
 		}))
-		.pipe(gulp.dest('builds/css'))
-		.pipe(reload({
-			stream: true
-		}));
+		.on('error', function(err) {})
+		.pipe(gulp.dest('builds/css'));
 });
 
-gulp.task('js', function() {
-	gulp.src('builds/js/**/*.js')
-		.pipe(watch('builds/js/**/*.js'))
-		.pipe(plumber())
-		.pipe(reload({
-			stream: true
-		}));
-});
-
-gulp.task('browser', function() {
-	browserSync({
-		server: {
-			baseDir: "builds"
-		}
-	});
-});
-
-gulp.task('default', ['jade', 'compass', 'js', 'browser']);
+gulp.task('default', ['server', 'compass']);
