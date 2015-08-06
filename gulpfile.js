@@ -2,21 +2,28 @@
 
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
-var sass = require('gulp-sass');
-var jade = require('gulp-jade');
 var reload = browserSync.reload;
 var plumber = require('gulp-plumber');
+var sass = require('gulp-sass');
+var path = require('path');
+var fs = require('fs');
+var data = require('gulp-data');
+var jade = require('gulp-jade');
 
 /**
- * Compile jade files into HTML
+ * Read the Json file and compile Jade files into HTML
  */
 gulp.task('templates', function() {
     return gulp.src('srcs/jade/*.jade')
         .pipe(plumber())
+        .pipe(data(function(file) {
+            var json = JSON.parse(fs.readFileSync('srcs/json/' + path.basename(file.path, '.jade') + '.json'));
+            return json;
+        }))
         .pipe(jade({
             pretty: '    '
         }))
-        .pipe(gulp.dest('builds'))
+        .pipe(gulp.dest('builds'));
 });
 
 /**
@@ -57,4 +64,5 @@ gulp.task('default', ['sass', 'templates'], function() {
 
     gulp.watch('srcs/scss/*.scss', ['sass']);
     gulp.watch('srcs/jade/*.jade', ['jade-watch']);
+    gulp.watch('srcs/json/*.json', ['jade-watch']);
 });

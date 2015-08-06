@@ -1,0 +1,14 @@
+{
+    "title": "This is my website",
+    "content": "I'm a front-end developer.",
+    "skills": [{
+        "name": "javascript",
+        "level": "master"
+    }, {
+        "name": "css",
+        "level": "junior"
+    }, {
+        "name": "html",
+        "level": "senior"
+    }]
+}

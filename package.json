@@ -21,11 +21,13 @@
   "homepage": "https://github.com/areyouse7en/gulp-project#readme",
   "dependencies": {
     "browser-sync": "^2.8.2",
+    "fs": "0.0.2",
     "gulp": "^3.9.0",
     "gulp-data": "^1.2.0",
     "gulp-jade": "^1.1.0",
     "gulp-plumber": "^1.0.1",
     "gulp-sass": "^2.0.4",
-    "gulp-wrap-amd": "^0.5.0"
+    "gulp-wrap-amd": "^0.5.0",
+    "path": "^0.11.14"
   }
 }
