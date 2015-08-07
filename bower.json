@@ -1,0 +1,25 @@
+{
+  "name": "gulp-project",
+  "version": "1.0.0",
+  "homepage": "https://github.com/areyouse7en/gulp-project#readme",
+  "authors": [
+    "Seven Tao"
+  ],
+  "description": "an initial environment for common projects with gulp",
+  "main": "gulpfile.js",
+  "keywords": [
+    "gulp"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.9.1",
+    "flatui": "*"
+  }
+}
