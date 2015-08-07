@@ -1,0 +1,49 @@
+doctype html
+html
+	head
+		title #{title}
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(http-equiv="content-type", content="text/html, charset=UTF-8")
+		meta(name="description", content="#{description}")
+		meta(name="keywords", content="#{keywords}")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+		block css
+			link(rel="stylesheet", href="libs/bootstrap/css/bootstrap.min.css")
+		block top-script
+			script(src="libs/jquery/jquery.min.js")
+
+	body
+		block header
+			nav(role="navigation").navbar.navbar-default
+				.navbar-header
+					button(type="button", data-toggle="collapse", data-target=".navbar-ex1-collapse").navbar-toggle.collapsed
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a(href="#" ).navbar-brand Title
+				.collapse.navbar-collapse.navbar-ex1-collapse
+					ul.nav.navbar-nav 
+						li.active: a(href="#") Link
+						li: a(href="#") Link
+					form(role="search").navbar-form.navbar-left
+						.form-group 
+							input(type="text", placeholder="Search").form-control
+						button(type="submit").btn.btn-default Submit
+					ul.nav.navbar-nav.navbar-right
+						li: a(href="#") Link
+						li.dropdown
+							a.dropdown-toggle(href="#", data-toggle="dropdown",role="button", aria-expanded="false")
+								| Dropdown 
+								span.caret
+							ul.dropdown-menu(role="menu")
+								li: a(href="#") Action
+								li: a(href="#") Another action
+								li: a(href="#") Something else here
+								li: a(href="#") Separated link
+		block container
+			h1 hello world
+				
+		block footer
+			
+		block bottom-script

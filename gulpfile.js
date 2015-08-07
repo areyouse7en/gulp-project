@@ -14,7 +14,7 @@ var jade = require('gulp-jade');
  * Read the Json file and compile Jade files into HTML
  */
 gulp.task('templates', function() {
-    return gulp.src('srcs/jade/*.jade')
+    return gulp.src('srcs/jade/**/*.jade')
         .pipe(plumber())
         .pipe(data(function(file) {
             var json = JSON.parse(fs.readFileSync('srcs/json/' + path.basename(file.path, '.jade') + '.json'));
@@ -63,6 +63,6 @@ gulp.task('default', ['sass', 'templates'], function() {
     });
 
     gulp.watch('srcs/scss/*.scss', ['sass']);
-    gulp.watch('srcs/jade/*.jade', ['jade-watch']);
+    gulp.watch('srcs/jade/**/*.jade', ['jade-watch']);
     gulp.watch('srcs/json/*.json', ['jade-watch']);
 });

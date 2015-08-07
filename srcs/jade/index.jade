@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-html(lang="en")
-head
-	meta(charset="UTF-8")
-	title #{title}
+extends layout/layout
+append css
 	link(rel="stylesheet", href="css/index.css")
-body
-	h1 #{content}
-	if (skills.length)
-		p I have some skills:
-		ul
-			- skills.forEach(function(item){
-				li #{item.name}, level #{item.level}
-			- })
-	else
-		p I have no skill.
+block container
+	.panel.panel-default
+		.panel-body
+			| Hello world demo.
