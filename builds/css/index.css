@@ -1,2 +1,3 @@
-h1 {
-  color: #999; }
+.container {
+  width: 1200px;
+  margin: 20px auto; }

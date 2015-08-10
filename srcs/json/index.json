@@ -1,14 +1,6 @@
 {
     "title": "This is my website",
-    "content": "I'm a front-end developer.",
-    "skills": [{
-        "name": "javascript",
-        "level": "master"
-    }, {
-        "name": "css",
-        "level": "junior"
-    }, {
-        "name": "html",
-        "level": "senior"
-    }]
+    "description": "用gulp快速搭建你的前端工作环境，可以根据需要使用jade，scss等前端技术",
+    "keywords": "gulp,jade,scss",
+    "content": "I'm a front-end developer."
 }
