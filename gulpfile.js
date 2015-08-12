@@ -4,7 +4,7 @@ var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var plumber = require('gulp-plumber');
-var sass = require('gulp-sass');
+var compass = require('gulp-compass');
 var path = require('path');
 var fs = require('fs');
 var data = require('gulp-data');
@@ -30,33 +30,35 @@ gulp.task('templates', function() {
 });
 
 /**
- * 监听jade的任务需要跟编译的分开
- */
-gulp.task('jade-watch', ['templates'], reload);
-
-/**
  * 把scss编译成css
  */
-gulp.task('sass', function() {
-    return gulp.src("srcs/scss/*.scss")
+gulp.task('compass', function() {
+    return gulp.src('srcs/scss/*.scss')
         .pipe(plumber({
             errorHandler: function(error) {
                 console.log(error.message);
                 this.emit('end');
             }
         }))
-        .pipe(sass())
-        .on('error', function(err) {})
-        .pipe(gulp.dest("builds/css"))
-        .pipe(reload({
-            stream: true
-        }));
+        .pipe(compass({
+            css: 'builds/css',
+            sass: 'srcs/scss'
+        }))
+        .on('error', function(err) {
+            // Would like to catch the error here 
+        })
+        .pipe(gulp.dest('builds/css'))
 });
+/**
+ * 监听任务需要跟编译的分开
+ */
+gulp.task('jade-watch', ['templates'], reload);
+gulp.task('scss-watch', ['compass'], reload);
 
 /**
  * 压缩js和css
  */
-gulp.task('jimin', function() {
+gulp.task('jsmin', function() {
     return gulp.src('builds/js/*.js')
         .pipe(uglify())
         .pipe(rename(function(path) {
@@ -72,17 +74,18 @@ gulp.task('cssmin', function() {
         }))
         .pipe(gulp.dest('builds/compressed/css'));
 });
+gulp.task('compress', ['jsmin', 'cssmin']);
 
 /**
  * 启动服务器，进行监听
  */
-gulp.task('default', ['sass', 'templates'], function() {
+gulp.task('default', ['compass', 'templates'], function() {
 
     browserSync({
         server: 'builds'
     });
 
-    gulp.watch('srcs/scss/*.scss', ['sass']);
+    gulp.watch('srcs/scss/*.scss', ['scss-watch']);
     gulp.watch('srcs/jade/**/*.jade', ['jade-watch']);
     gulp.watch('srcs/json/*.json', ['jade-watch']);
 });

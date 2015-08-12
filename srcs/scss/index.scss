@@ -1,4 +1,9 @@
+@import "compass/reset";
 .container{
 	width: 1200px;
 	margin: 20px auto;
+	h1{
+		font-size: 25px;
+		color: red;
+	}
 }
