@@ -1,6 +1,6 @@
 {
   "name": "gulp-project",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "an initial environment for common projects with gulp",
   "main": "gulpfile.js",
   "scripts": {
@@ -21,7 +21,6 @@
   "homepage": "https://github.com/areyouse7en/gulp-project#readme",
   "dependencies": {
     "browser-sync": "^2.8.2",
-    "fs": "0.0.2",
     "gulp": "^3.9.0",
     "gulp-compass": "^2.1.0",
     "gulp-data": "^1.2.0",
@@ -29,7 +28,6 @@
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.2.0",
-    "gulp-uglifycss": "^1.0.4",
-    "gulp-wrap-amd": "^0.5.0"
+    "gulp-uglifycss": "^1.0.4"
   }
 }
