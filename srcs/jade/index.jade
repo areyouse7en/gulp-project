@@ -1,8 +1,10 @@
 extends layout/layout
-block css
-	link(rel="stylesheet", href="./css/index.css")
+append css
+	link(rel="stylesheet", href="css/index.css")
+block header
+	.header
 block container
 	.container
 		h1 #{content}
-block script
-	script(src="./js/index.js")
+block footer
+	.footer

@@ -12,22 +12,6 @@ var jade = require('gulp-jade');
 var uglify = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
 var rename = require("gulp-rename");
-var coffee = require('gulp-coffee');
-
-/**
- * 把coffee编译成js
- */
-gulp.task('coffee', function() {
-    return gulp.src('srcs/coffee/*.coffee')
-        .pipe(plumber())
-        .pipe(coffee({
-            bare: true
-        }))
-        .on('error', function(err) {
-            // Would like to catch the error here 
-        })
-        .pipe(gulp.dest('builds/js'))
-});
 
 /**
  * 把jade编译成html，编译过程会寻找对应名字的json文件
@@ -65,13 +49,11 @@ gulp.task('compass', function() {
         })
         .pipe(gulp.dest('builds/css'))
 });
-
 /**
  * 监听任务需要跟编译的分开
  */
 gulp.task('jade-watch', ['templates'], reload);
 gulp.task('scss-watch', ['compass'], reload);
-gulp.task('coffee-watch', ['coffee'], reload);
 
 /**
  * 压缩js和css
@@ -97,7 +79,7 @@ gulp.task('compress', ['jsmin', 'cssmin']);
 /**
  * 启动服务器，进行监听
  */
-gulp.task('default', ['compass', 'templates', 'coffee'], function() {
+gulp.task('default', ['compass', 'templates'], function() {
 
     browserSync({
         server: 'builds'
@@ -106,5 +88,4 @@ gulp.task('default', ['compass', 'templates', 'coffee'], function() {
     gulp.watch('srcs/scss/*.scss', ['scss-watch']);
     gulp.watch('srcs/jade/**/*.jade', ['jade-watch']);
     gulp.watch('srcs/json/*.json', ['jade-watch']);
-    gulp.watch('srcs/coffee/*.coffee', ['coffee-watch']);
 });
