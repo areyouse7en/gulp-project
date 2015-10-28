@@ -1,6 +1,6 @@
 {
-    "title": "This is my website",
-    "description": "用gulp快速搭建你的前端工作环境，可以根据需要使用jade，scss等前端技术",
-    "keywords": "gulp,jade,scss",
-    "content": "I'm a front-end developer."
+    "title": "请叫我雷锋",
+    "description": "用gulp快速搭建你的前端开发环境",
+    "keywords": "gulp,jade,scss,coffee",
+    "content": "Hello Gulp!"
 }
