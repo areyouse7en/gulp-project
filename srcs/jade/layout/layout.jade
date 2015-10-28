@@ -8,8 +8,15 @@ html
 		meta(name="keywords", content="#{keywords}")
 		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
 		block css
+		block top-script
+			script(src="libs/jquery/jquery.min.js")
 	body
 		block header
+			.header Here is header
+			br
 		block container
+			.container Here is container
+			br
 		block footer
-		block script
+			.footer Here is footer
+		block bottom-script
