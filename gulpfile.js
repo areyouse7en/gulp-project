@@ -8,38 +8,22 @@ var compass = require('gulp-compass');
 var path = require('path');
 var fs = require('fs');
 var data = require('gulp-data');
-var jade = require('gulp-jade');
+var pug = require('gulp-pug');
 var uglify = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
 var rename = require("gulp-rename");
-var coffee = require('gulp-coffee');
 
 /**
- * 把coffee编译成js
- */
-gulp.task('coffee', function() {
-    return gulp.src('srcs/coffee/*.coffee')
-        .pipe(plumber())
-        .pipe(coffee({
-            bare: true
-        }))
-        .on('error', function(err) {
-            // Would like to catch the error here 
-        })
-        .pipe(gulp.dest('builds/js'))
-});
-
-/**
- * 把jade编译成html，编译过程会寻找对应名字的json文件
+ * 把pug编译成html，编译过程会寻找对应名字的json文件
  */
 gulp.task('templates', function() {
-    return gulp.src('srcs/jade/*.jade')
+    return gulp.src('srcs/pug/*.pug')
         .pipe(plumber())
         .pipe(data(function(file) {
-            var json = JSON.parse(fs.readFileSync('srcs/json/' + path.basename(file.path, '.jade') + '.json'));
+            var json = JSON.parse(fs.readFileSync('srcs/json/config.json'));
             return json;
         }))
-        .pipe(jade({
+        .pipe(pug({
             pretty: '    '
         }))
         .pipe(gulp.dest('builds'));
@@ -69,9 +53,8 @@ gulp.task('compass', function() {
 /**
  * 监听任务需要跟编译的分开
  */
-gulp.task('jade-watch', ['templates'], reload);
+gulp.task('pug-watch', ['templates'], reload);
 gulp.task('scss-watch', ['compass'], reload);
-gulp.task('coffee-watch', ['coffee'], reload);
 
 /**
  * 压缩js和css
@@ -97,14 +80,14 @@ gulp.task('compress', ['jsmin', 'cssmin']);
 /**
  * 启动服务器，进行监听
  */
-gulp.task('default', ['compass', 'templates', 'coffee'], function() {
+gulp.task('default', ['compass', 'templates'], function() {
 
     browserSync({
         server: 'builds'
     });
 
     gulp.watch('srcs/scss/*.scss', ['scss-watch']);
-    gulp.watch('srcs/jade/**/*.jade', ['jade-watch']);
-    gulp.watch('srcs/json/*.json', ['jade-watch']);
-    gulp.watch('srcs/coffee/*.coffee', ['coffee-watch']);
+    gulp.watch('srcs/pug/**/*.pug', ['pug-watch']);
+    gulp.watch('srcs/json/*.json', ['pug-watch']);
+    gulp.watch('builds/js/**.js', reload);
 });
