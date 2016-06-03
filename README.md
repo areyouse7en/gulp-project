@@ -5,7 +5,7 @@
 
 ---
 ##### 用法
-1. 安装node（如果被墙，可用[镜像](http://npm.taobao.org/) ）、ruby（[镜像](http://ruby.taobao.org/) ）
+1. 安装node（如果被墙，可用[镜像](http://npm.taobao.org/) ）、ruby（[镜像](https://gems.ruby-china.org/) ）
 2. Clone项目到本地，打开终端，cd到项目目录
 3. 全局安装gulp和bower（cnpm install gulp bower -g）
 4. `cnpm install`  安装node依赖包
