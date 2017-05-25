@@ -1,93 +1,99 @@
-'use strict';
+const gulp = require('gulp')
+const pug = require('gulp-pug') // pug的编译
+const sass = require('gulp-sass') // sass的编译
+const sourcemaps = require('gulp-sourcemaps')
+const autoprefixer = require('gulp-autoprefixer') // 自动添加css前缀
+const cssnano = require('gulp-cssnano') // 压缩css
+const babel = require('gulp-babel') // 编译ES6
+const concat = require('gulp-concat') //合并js
+const uglify = require('gulp-uglify') // 压缩js
+const plumber = require('gulp-plumber') // 监控错误
+const browserSync = require('browser-sync') // 服务器
+const reload = browserSync.reload //自刷新
 
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
-var plumber = require('gulp-plumber');
-var compass = require('gulp-compass');
-var path = require('path');
-var fs = require('fs');
-var data = require('gulp-data');
-var pug = require('gulp-pug');
-var uglify = require('gulp-uglify');
-var uglifycss = require('gulp-uglifycss');
-var rename = require("gulp-rename");
-
-/**
- * 把pug编译成html，编译过程会寻找对应名字的json文件
- */
-gulp.task('templates', function() {
-    return gulp.src('srcs/pug/*.pug')
+/*编译pug*/
+gulp.task('views', () => {
+    gulp.src('src/views/**.pug')
         .pipe(plumber())
-        .pipe(data(function(file) {
-            var json = JSON.parse(fs.readFileSync('srcs/json/config.json'));
-            return json;
-        }))
         .pipe(pug({
             pretty: '    '
         }))
-        .pipe(gulp.dest('builds'));
-});
+        .pipe(gulp.dest('builds'))
+        .pipe(reload({ stream: true }))
+})
 
-/**
- * 把scss编译成css
- */
-gulp.task('compass', function() {
-    return gulp.src('srcs/scss/*.scss')
-        .pipe(plumber({
-            errorHandler: function(error) {
-                console.log(error.message);
-                this.emit('end');
-            }
-        }))
-        .pipe(compass({
-            css: 'builds/css',
-            sass: 'srcs/scss'
-        }))
-        .on('error', function(err) {
-            // Would like to catch the error here 
-        })
+/*编译scss*/
+const supported = [
+    'last 2 versions',
+    'safari >= 8',
+    'ie >= 9',
+    'ff >= 20',
+    'ios 6',
+    'android 4'
+]
+
+gulp.task('sass', () => {
+    gulp.src('src/styles/**.scss')
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer({ browsers: supported, add: true }))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('builds/css'))
-});
+        .pipe(reload({ stream: true }))
+})
 
-/**
- * 监听任务需要跟编译的分开
- */
-gulp.task('pug-watch', ['templates'], reload);
-gulp.task('scss-watch', ['compass'], reload);
+/*压缩css*/
+gulp.task('cssmin', () => {
+    gulp.src('src/styles/**.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(cssnano({
+            autoprefixer: { browsers: supported, add: true }
+        }))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('builds/dist'))
+})
 
-/**
- * 压缩js和css
- */
-gulp.task('jsmin', function() {
-    return gulp.src('builds/js/*.js')
+/*编译es6*/
+gulp.task('es6', () => {
+    gulp.src('src/scripts/**.js')
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['es2015', 'stage-2'],
+            plugins: ['transform-runtime']
+        }))
+        .pipe(concat('app.js'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('builds/js'))
+        .pipe(reload({ stream: true }))
+})
+
+/*压缩js*/
+gulp.task('jsmin', () => {
+    gulp.src('src/scripts/**.js')
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['es2015', 'stage-2'],
+            plugins: ['transform-runtime']
+        }))
+        .pipe(concat('app.js'))
         .pipe(uglify())
-        .pipe(rename(function(path) {
-            path.basename += '.min'
-        }))
-        .pipe(gulp.dest('builds/compressed/js'));
-});
-gulp.task('cssmin', function() {
-    gulp.src('builds/css/*.css')
-        .pipe(uglifycss())
-        .pipe(rename(function(path) {
-            path.basename += '.min'
-        }))
-        .pipe(gulp.dest('builds/compressed/css'));
-});
-gulp.task('compress', ['jsmin', 'cssmin']);
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('builds/dist'))
+})
 
-/**
- * 启动服务器，进行监听
- */
-gulp.task('default', ['compass', 'templates'], function() {
+// 开发
+gulp.task('default', ['views', 'sass', 'es6'], () => {
+    //指定服务器启动目录
+    browserSync.init({ server: 'builds' })
 
-    browserSync({
-        server: 'builds'
-    });
+    // 监听
+    gulp.watch('src/views/**.pug', ['views'])
+    gulp.watch('src/styles/*.scss', ['sass'])
+    gulp.watch('src/scripts/**.js', ['es6'])
+})
 
-    gulp.watch('srcs/scss/*.scss', ['scss-watch']);
-    gulp.watch('srcs/pug/**/*.pug', ['pug-watch']);
-    gulp.watch('srcs/json/*.json', ['pug-watch']);
-    gulp.watch('builds/js/**.js', reload);
-});
+// 生产
+gulp.task('build', ['cssmin', 'jsmin'])
