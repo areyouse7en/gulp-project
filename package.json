@@ -1,15 +1,25 @@
 {
-  "name": "seven-02-wxpetstore",
+  "name": "gulp-project",
   "version": "1.0.0",
-  "description": "",
-  "main": "builds/index.html",
+  "description": "用gulp快速搭建前端工作环境",
+  "main": "gulpfile.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "ssh://git@116.62.105.110:10022/home/data/git/seven-02-wxpetstore.git"
+    "url": "git+https://github.com/areyouse7en/gulp-project.git"
   },
+  "keywords": [
+    "gulp",
+    "sass",
+    "babel",
+    "pug"
+  ],
   "author": "Seven Tao",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/areyouse7en/gulp-project/issues"
+  },
+  "homepage": "https://github.com/areyouse7en/gulp-project#readme",
   "devDependencies": {
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",

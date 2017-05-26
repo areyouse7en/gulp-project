@@ -11,19 +11,35 @@ const plumber = require('gulp-plumber') // 监控错误
 const browserSync = require('browser-sync') // 服务器
 const reload = browserSync.reload //自刷新
 
+/*项目目录，按需设置*/
+const srcPath = 'src/'
+const srcPathHtml = srcPath + 'views/'
+const srcPathCss = srcPath + 'styles/'
+const srcPathJs = srcPath + 'scripts/'
+
+const devPath = 'dev/'
+const devPathHtml = devPath
+const devPathCss = devPath + 'css/'
+const devPathJs = devPath + 'js/'
+
+const buildPath = 'dist/'
+const buildPathHtml = buildPath
+const buildPathCss = buildPath + 'css/'
+const buildPathJs = buildPath + 'js/'
+
 /*编译pug*/
 gulp.task('views', () => {
-    gulp.src('src/views/**.pug')
+    gulp.src(srcPathHtml + '**.pug')
         .pipe(plumber())
         .pipe(pug({
             pretty: '    '
         }))
-        .pipe(gulp.dest('builds'))
+        .pipe(gulp.dest(devPathHtml))
         .pipe(reload({ stream: true }))
 })
 
 /*编译scss*/
-const supported = [
+const browsersSupported = [
     'last 2 versions',
     'safari >= 8',
     'ie >= 9',
@@ -33,66 +49,65 @@ const supported = [
 ]
 
 gulp.task('sass', () => {
-    gulp.src('src/styles/**.scss')
+    gulp.src(srcPathCss + '*.scss')
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
-        .pipe(autoprefixer({ browsers: supported, add: true }))
+        .pipe(autoprefixer({ browsers: browsersSupported, add: true }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('builds/css'))
+        .pipe(gulp.dest(devPathCss))
         .pipe(reload({ stream: true }))
 })
 
 /*压缩css*/
 gulp.task('cssmin', () => {
-    gulp.src('src/styles/**.scss')
+    gulp.src(srcPathCss + '*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(cssnano({
-            autoprefixer: { browsers: supported, add: true }
+            autoprefixer: { browsers: browsersSupported, add: true }
         }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('builds/dist'))
+        .pipe(gulp.dest(buildPathCss))
 })
 
 /*编译es6*/
+const babelOptions = {
+    presets: ['es2015', 'stage-2'], //需要额外安装这几个babel-插件
+    plugins: ['transform-runtime']
+}
+
 gulp.task('es6', () => {
-    gulp.src('src/scripts/**.js')
+    gulp.src(srcPathJs + '*.js')
         .pipe(plumber())
         .pipe(sourcemaps.init())
-        .pipe(babel({
-            presets: ['es2015', 'stage-2'],
-            plugins: ['transform-runtime']
-        }))
-        .pipe(concat('app.js'))
+        .pipe(babel(babelOptions))
+        // .pipe(concat('app.js')) // 合并为一个js
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('builds/js'))
+        .pipe(gulp.dest(devPathJs))
         .pipe(reload({ stream: true }))
 })
 
 /*压缩js*/
 gulp.task('jsmin', () => {
-    gulp.src('src/scripts/**.js')
+    gulp.src(srcPathJs + '*.js')
         .pipe(sourcemaps.init())
-        .pipe(babel({
-            presets: ['es2015', 'stage-2'],
-            plugins: ['transform-runtime']
-        }))
-        .pipe(concat('app.js'))
+        .pipe(babel(babelOptions))
+        // .pipe(concat('app.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('builds/dist'))
+        .pipe(gulp.dest(buildPathJs))
 })
 
 // 开发
 gulp.task('default', ['views', 'sass', 'es6'], () => {
     //指定服务器启动目录
-    browserSync.init({ server: 'builds' })
+    browserSync.init({ server: devPath })
 
     // 监听
-    gulp.watch('src/views/**.pug', ['views'])
-    gulp.watch('src/styles/*.scss', ['sass'])
-    gulp.watch('src/scripts/**.js', ['es6'])
+    gulp.watch(srcPathHtml + '*.pug', ['views'])
+    gulp.watch(srcPathCss + '*.scss', ['sass'])
+    gulp.watch(srcPathJs + '*.js', ['es6'])
 })
 
 // 生产

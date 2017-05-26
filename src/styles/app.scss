@@ -1,6 +1,18 @@
-@import "_normalize.scss";
-$primary:#333;
+@import "normalize";
+
+/* colors */
+
+$default:#666;
+$info:#39f;
+$success:#0c6;
+$warning:#f90;
+$error:#f30;
+$text:#464c5b;
+
+/* common */
+
 h1 {
+    font-size: 40px;
     text-align: center;
-    color: $primary;
+    color: $text;
 }

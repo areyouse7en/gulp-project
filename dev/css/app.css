@@ -375,8 +375,11 @@ template {
 [hidden] {
   display: none; }
 
+/* colors */
+/* common */
 h1 {
+  font-size: 40px;
   text-align: center;
-  color: #333; }
+  color: #464c5b; }
 
 /*# sourceMappingURL=app.css.map */
