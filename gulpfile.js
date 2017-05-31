@@ -10,7 +10,6 @@ const uglify = require('gulp-uglify') // 压缩js
 const plumber = require('gulp-plumber') // 管道工，报错不停止服务
 const browserSync = require('browser-sync') // 提供多端同步的服务器 https://browsersync.io/docs/options
 const reload = browserSync.reload // 自刷新
-const url = require('url')
 const proxy = require('http-proxy-middleware') //代理中间件 https://github.com/chimurai/http-proxy-middleware
 
 /*项目目录，按需设置*/
