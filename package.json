@@ -10,9 +10,11 @@
   },
   "keywords": [
     "gulp",
-    "sass",
-    "babel",
-    "pug"
+    "pug",
+    "scss",
+    "es6",
+    "browser-sync",
+    "proxy"
   ],
   "author": "Seven Tao",
   "license": "MIT",
@@ -34,6 +36,7 @@
     "gulp-pug": "^3.3.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "http-proxy-middleware": "^0.17.4"
   }
 }
