@@ -18,18 +18,21 @@ const srcPath = 'src/'
 const srcPathHtml = srcPath + 'views/'
 const srcPathCss = srcPath + 'styles/'
 const srcPathJs = srcPath + 'scripts/'
+const srcPathStatic = srcPath + 'static/'
 
 // 开发目录
 const devPath = 'dev/'
 const devPathHtml = devPath
 const devPathCss = devPath + 'css/'
 const devPathJs = devPath + 'js/'
+const devPathStatic = devPath + 'static/'
 
 // 生产目录
 const buildPath = 'dist/'
 const buildPathHtml = buildPath
 const buildPathCss = buildPath + 'css/'
 const buildPathJs = buildPath + 'js/'
+const buildPathStatic = buildPath + 'static/'
 
 /*编译pug*/
 gulp.task('views', () => {
@@ -41,6 +44,17 @@ gulp.task('views', () => {
         .pipe(gulp.dest(devPathHtml))
         .pipe(reload({ stream: true }))
 })
+
+gulp.task('viewsbuild', () => {
+    gulp.src(srcPathHtml + '**.pug')
+        .pipe(plumber())
+        .pipe(pug({
+            pretty: '    '
+        }))
+        .pipe(gulp.dest(buildPath))
+})
+
+
 
 /*编译scss*/
 const browsersSupported = [
@@ -103,8 +117,15 @@ gulp.task('jsmin', () => {
         .pipe(gulp.dest(buildPathJs))
 })
 
+/*移动静态文件，不做任何处理*/
+gulp.task('static', () => {
+    gulp.src(srcPathStatic + '**')
+        .pipe(gulp.dest(devPathStatic))
+        .pipe(gulp.dest(buildPathStatic))
+})
+
 // 开发
-gulp.task('default', ['views', 'sass', 'es6'], () => {
+gulp.task('default', ['views', 'sass', 'es6', 'static'], () => {
 
     //指定服务器启动目录
     browserSync.init({
@@ -132,7 +153,8 @@ gulp.task('default', ['views', 'sass', 'es6'], () => {
     gulp.watch(srcPathHtml + '*.pug', ['views'])
     gulp.watch(srcPathCss + '*.scss', ['sass'])
     gulp.watch(srcPathJs + '*.js', ['es6'])
+    gulp.watch(srcPathStatic + '**', ['static'])
 })
 
 // 生产
-gulp.task('build', ['cssmin', 'jsmin'])
+gulp.task('build', ['viewsbuild', 'cssmin', 'jsmin', 'static'])

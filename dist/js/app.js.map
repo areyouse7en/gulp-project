@@ -1,1 +1,0 @@
-{"version":3,"sources":["app.js"],"names":["greeting","document","write"],"mappings":"aAAA,IAAMA,SAAW,WAAQC,SAASC,MAAT,wBAAzBF","file":"app.js","sourcesContent":["const greeting = () => { document.write(`<h1>Hello Gulp</h1>`) }\r\n\r\ngreeting()\r\n"]}
