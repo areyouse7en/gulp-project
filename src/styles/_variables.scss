@@ -1,0 +1,46 @@
+/* prefix */
+
+$pre: "fs-";
+
+/* Colors */
+
+$black:#000;
+$white:#fff;
+$gray-darker: lighten($black, 13.5%); // #222
+$gray-dark: lighten($black, 20%); // #333
+$gray: lighten($black, 33.5%); // #555
+$gray-light: lighten($black, 60%); // #999
+$gray-lighter: lighten($black, 93.5%); // #eee
+$primary:#2d8cf0;
+$primary-darker:darken($primary, 10%);
+$primary-light:lighten($primary, 10%);
+$success:#19be6b;
+$warning:#ff9900;
+$danger:#ed3f14;
+
+/* Main Colors */
+
+$body-bg:#f8f8f9;
+$link:$primary;
+
+/* Font */
+
+$global-line-height:1.5;
+$global-font-size:1.6rem;
+$font-size-xxs: $global-font-size - 0.6; // 10px
+$font-size-xs: $global-font-size - 0.4; // 12px
+$font-size-sm: $global-font-size - 0.2; // 14px
+$font-size-default: $global-font-size; // 16px
+$font-size-lg: $global-font-size + 0.2; // 18px
+$font-size-xl: $global-font-size + 0.8; // 24px
+$font-size-xxl: $global-font-size * 2; // 32px
+$font-size-xxxl: $global-font-size * 2 + 1; // 42px
+
+/* Spacing */
+
+$global-spacing:1.6rem;
+$global-spacing-xs:$global-spacing - 1.1; // 5px
+$global-spacing-sm:$global-spacing - 0.6; // 10px
+$global-spacing-default: $global-spacing; // 16px
+$global-spacing-lg:$global-spacing + 0.6; // 22px
+$global-spacing-xl:$global-spacing + 1.1; // 27px

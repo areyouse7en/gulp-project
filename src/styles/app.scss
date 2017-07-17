@@ -1,18 +1,8 @@
 @import "normalize";
+@import "base";
 
-/* colors */
-
-$default:#666;
-$info:#39f;
-$success:#0c6;
-$warning:#f90;
-$error:#f30;
-$text:#464c5b;
-
-/* common */
-
-h1 {
-    font-size: 40px;
-    text-align: center;
-    color: $text;
+.greeting{
+	@extend .fs-text-primary;
+	@extend .fs-text-xxl;
+	@extend .fs-text-center;
 }

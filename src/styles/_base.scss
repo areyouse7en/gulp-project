@@ -1,0 +1,243 @@
+@import "variables";
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 10px;
+}
+
+body {
+    height: 100%;
+    background: $body-bg;
+    font-size: $font-size-sm;
+    line-height: $global-line-height;
+    color: $gray-dark;
+}
+
+
+/* Text Size */
+
+.#{$pre}text-xxs {
+    font-size: $font-size-xxs;
+}
+
+.#{$pre}text-xs {
+    font-size: $font-size-xs;
+}
+
+.#{$pre}text-sm,
+p,
+h6 {
+    font-size: $font-size-sm;
+}
+
+.#{$pre}text-default,
+h5 {
+    font-size: $font-size-default;
+}
+
+.#{$pre}text-lg,
+h4 {
+    font-size: $font-size-lg;
+}
+
+.#{$pre}text-xl,
+h3 {
+    font-size: $font-size-xl;
+}
+
+.#{$pre}text-xxl,
+h2 {
+    font-size: $font-size-xxl;
+}
+
+.#{$pre}text-xxxl,
+h1 {
+    font-size: $font-size-xxxl;
+}
+
+
+/* Text Color */
+
+.#{$pre}text-default {
+    color: $gray-dark;
+}
+
+.#{$pre}text-primary,
+a {
+    color: $primary;
+    &:hover {
+        color: $primary-light;
+    }
+}
+
+.#{$pre}text-secondary {
+    color: $primary-light;
+}
+
+.#{$pre}text-success {
+    color: $success;
+}
+
+.#{$pre}text-warning {
+    color: $warning;
+}
+
+.#{$pre}text-danger {
+    color: $danger;
+}
+
+.#{$pre}text-sub {
+    color: $gray-light;
+}
+
+
+/* Text Align */
+
+@each $dir in left,
+center,
+right {
+    .#{$pre}text-#{$dir} {
+        text-align: $dir !important;
+    }
+}
+
+
+/* Image */
+
+.#{$pre}img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* Float */
+
+.#{$pre}fl {
+    float: left;
+}
+
+.#{$pre}fr {
+    float: right;
+}
+
+.#{$pre}cf:before,
+.#{$pre}cf:after {
+    content: " ";
+    display: table;
+}
+
+.#{$pre}cf:after {
+    clear: both;
+}
+
+
+/* Margin */
+
+@each $dir in top,
+right,
+bottom,
+left {
+    @each $size,
+    $value in (xs: $global-spacing-xs, sm: $global-spacing-sm, default: $global-spacing-default, lg: $global-spacing-lg, xl: $global-spacing-xl) {
+        @if $size==default {
+            .#{$pre}margin-#{$dir} {
+                margin-#{$dir}: #{$value};
+            }
+        }
+        @else {
+            .#{$pre}margin-#{$dir}-#{$size} {
+                margin-#{$dir}: #{$value};
+            }
+        }
+    }
+}
+
+@each $size,
+$value in (xs: $global-spacing-xs, sm: $global-spacing-sm, default: $global-spacing-default, lg: $global-spacing-lg, xl: $global-spacing-xl) {
+    @if $size==default {
+        .#{$pre}margin {
+            margin: #{$value};
+        }
+        .#{$pre}margin-vertical {
+            margin-top: #{$value};
+            margin-bottom: #{$value};
+        }
+        .#{$pre}margin-horizontal {
+            margin-left: #{$value};
+            margin-right: #{$value};
+        }
+    }
+    @else {
+        .#{$pre}margin-#{$size} {
+            margin: #{$value};
+        }
+        .#{$pre}margin-vertical-#{$size} {
+            margin-top: #{$value};
+            margin-bottom: #{$value};
+        }
+        .#{$pre}margin-horizontal-#{$size} {
+            margin-left: #{$value};
+            margin-right: #{$value};
+        }
+    }
+}
+
+
+/* Padding */
+
+@each $dir in top,
+right,
+bottom,
+left {
+    @each $size,
+    $value in (xs: $global-spacing-xs, sm: $global-spacing-sm, default: $global-spacing-default, lg: $global-spacing-lg, xl: $global-spacing-xl) {
+        @if $size==default {
+            .#{$pre}padding-#{$dir} {
+                padding-#{$dir}: #{$value};
+            }
+        }
+        @else {
+            .#{$pre}padding-#{$dir}-#{$size} {
+                padding-#{$dir}: #{$value};
+            }
+        }
+    }
+}
+
+@each $size,
+$value in (xs: $global-spacing-xs, sm: $global-spacing-sm, default: $global-spacing-default, lg: $global-spacing-lg, xl: $global-spacing-xl) {
+    @if $size==default {
+        .#{$pre}padding {
+            padding: #{$value};
+        }
+        .#{$pre}padding-vertical {
+            padding-top: #{$value};
+            padding-bottom: #{$value};
+        }
+        .#{$pre}padding-horizontal {
+            padding-left: #{$value};
+            padding-right: #{$value};
+        }
+    }
+    @else {
+        .#{$pre}padding-#{$size} {
+            padding: #{$value};
+        }
+        .#{$pre}padding-vertical-#{$size} {
+            padding-top: #{$value};
+            padding-bottom: #{$value};
+        }
+        .#{$pre}padding-horizontal-#{$size} {
+            padding-left: #{$value};
+            padding-right: #{$value};
+        }
+    }
+}

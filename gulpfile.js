@@ -143,16 +143,16 @@ gulp.task('default', ['views', 'sass', 'es6', 'static'], () => {
         port: 3000, // 端口
         open: "ui", // 自动打开浏览器，地址默认localhost，可选external（用ip），ui（总操作台）
         logConnections: true, // cmd输出连接日志
-        notify: false, // 右上角通知
+        notify: true, // 右上角通知
         middleware: [ // 请求代理，按需设置
-            proxy('/api', {
+            /*proxy('/api', {
                 target: 'http://op.juhe.cn', // 目标地址
                 changeOrigin: true,
                 ws: true, //websocket
                 pathRewrite: {
                     '^/api': '' //重写地址
                 }
-            })
+            })*/
         ]
     })
 

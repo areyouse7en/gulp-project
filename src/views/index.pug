@@ -2,9 +2,11 @@
 html(lang="en")
 head
 	meta(charset="UTF-8")
-	meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 	title Gulp Project
 	link(rel="stylesheet", href="../css/app.css")
 body
-	script(src="https://unpkg.com/jquery@3.2.1")
+	#app
+		.greeting {{greeting}}
+	script(src="https://unpkg.com/vue@latest")
 	script(src="../js/app.js")
