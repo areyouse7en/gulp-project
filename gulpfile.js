@@ -1,4 +1,5 @@
 const gulp = require('gulp')
+const del = require('del')
 const pug = require('gulp-pug') // pug的编译
 const sass = require('gulp-sass') // sass的编译
 const sourcemaps = require('gulp-sourcemaps') // 源码追踪
@@ -22,21 +23,29 @@ const srcPathStatic = srcPath + 'static/'
 
 // 开发目录
 const devPath = 'dev/'
-const devPathHtml = devPath
+const devPathHtml = devPath + 'views/'
 const devPathCss = devPath + 'css/'
 const devPathJs = devPath + 'js/'
 const devPathStatic = devPath + 'static/'
 
 // 生产目录
 const buildPath = 'dist/'
-const buildPathHtml = buildPath
+const buildPathHtml = buildPath + 'views/'
 const buildPathCss = buildPath + 'css/'
 const buildPathJs = buildPath + 'js/'
 const buildPathStatic = buildPath + 'static/'
 
+/*清空文件夹*/
+gulp.task('clean', function() {
+    return del([
+        // 'dev',
+        'dist'
+    ])
+})
+
 /*编译pug*/
 gulp.task('views', () => {
-    gulp.src(srcPathHtml + '**.pug')
+    return gulp.src(srcPathHtml + '**.pug')
         .pipe(plumber())
         .pipe(pug({
             pretty: '    '
@@ -45,16 +54,14 @@ gulp.task('views', () => {
         .pipe(reload({ stream: true }))
 })
 
-gulp.task('viewsbuild', () => {
-    gulp.src(srcPathHtml + '**.pug')
+gulp.task('viewsbuild', ['clean'], () => {
+    return gulp.src(srcPathHtml + '**.pug')
         .pipe(plumber())
         .pipe(pug({
             pretty: '    '
         }))
-        .pipe(gulp.dest(buildPath))
+        .pipe(gulp.dest(buildPathHtml))
 })
-
-
 
 /*编译scss*/
 const browsersSupported = [
@@ -67,7 +74,7 @@ const browsersSupported = [
 ]
 
 gulp.task('sass', () => {
-    gulp.src(srcPathCss + '*.scss')
+    return gulp.src(srcPathCss + '*.scss')
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
@@ -78,8 +85,8 @@ gulp.task('sass', () => {
 })
 
 /*压缩css*/
-gulp.task('cssmin', () => {
-    gulp.src(srcPathCss + '*.scss')
+gulp.task('cssmin', ['clean'], () => {
+    return gulp.src(srcPathCss + '*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(cssnano({
@@ -96,7 +103,7 @@ const babelOptions = {
 }
 
 gulp.task('es6', () => {
-    gulp.src(srcPathJs + '*.js')
+    return gulp.src(srcPathJs + '*.js')
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(babel(babelOptions))
@@ -107,8 +114,8 @@ gulp.task('es6', () => {
 })
 
 /*压缩js*/
-gulp.task('jsmin', () => {
-    gulp.src(srcPathJs + '*.js')
+gulp.task('jsmin', ['clean'], () => {
+    return gulp.src(srcPathJs + '*.js')
         .pipe(sourcemaps.init())
         .pipe(babel(babelOptions))
         // .pipe(concat('app.js'))
@@ -119,7 +126,7 @@ gulp.task('jsmin', () => {
 
 /*移动静态文件，不做任何处理*/
 gulp.task('static', () => {
-    gulp.src(srcPathStatic + '**')
+    return gulp.src(srcPathStatic + '**')
         .pipe(gulp.dest(devPathStatic))
         .pipe(gulp.dest(buildPathStatic))
 })
@@ -157,4 +164,4 @@ gulp.task('default', ['views', 'sass', 'es6', 'static'], () => {
 })
 
 // 生产
-gulp.task('build', ['viewsbuild', 'cssmin', 'jsmin', 'static'])
+gulp.task('build', ['clean', 'viewsbuild', 'cssmin', 'jsmin', 'static'])
