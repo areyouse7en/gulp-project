@@ -1,7 +1,10 @@
 @import "normalize";
 @import "base";
+[v-cloak] {
+	display: none;
+}
 
-.greeting{
+.greeting {
 	@extend .fs-text-primary;
 	@extend .fs-text-xxl;
 	@extend .fs-text-center;
