@@ -1,6 +1,6 @@
 {
   "name": "gulp-project",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "用gulp快速搭建前端工作环境",
   "main": "gulpfile.js",
   "scripts": {
@@ -26,21 +26,19 @@
   },
   "homepage": "https://github.com/areyouse7en/gulp-project#readme",
   "devDependencies": {
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
     "browser-sync": "^2.18.13",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-babel": "^7.0.0",
-    "gulp-concat": "^2.6.1",
     "gulp-cssnano": "^2.1.2",
     "gulp-plumber": "^1.1.0",
     "gulp-pug": "^3.3.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^3.0.0",
+    "gulp-watch": "^4.3.11",
     "http-proxy-middleware": "^0.17.4",
     "node-sass": "^4.5.3"
   }
