@@ -14,10 +14,15 @@ html {
 
 body {
     height: 100%;
+    margin: 0;
     background: $body-bg;
     font-size: $font-size-sm;
     line-height: $global-line-height;
     color: $gray-dark;
+}
+
+a {
+    text-decoration: none;
 }
 
 

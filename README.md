@@ -10,11 +10,9 @@
 4. `gulp build`或者`npm run build` 生产环境，打包压缩
 
 ---
-#### gulpfile配置
-1. 默认使用pug和scss
-2. 目录分src源目录，dev开发目录和dist生产目录(压缩css和js)
-3. browserSync可按需设置，默认自刷新，开启日志输出
-4. proxy代理也按需设置，根据规则匹配就好了
+#### 配置
+1. 在config.js中按需设置开发目录，端口和代理等
+2. 在gulpfile.js中按需设置各编译任务，浏览器服务等
 
 ---
 ##### 参考
