@@ -1,5 +1,5 @@
 {
-  "name": "gulp-project",
+  "name": "qf-gulp-project",
   "version": "2.0.2",
   "description": "用gulp快速搭建前端工作环境",
   "main": "gulpfile.js",
